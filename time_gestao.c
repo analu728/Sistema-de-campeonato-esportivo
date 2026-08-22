@@ -19,7 +19,7 @@ void liberarVetTimes(VetTimes *v){
     v->cap = 0;
 }
 
-void cadastrarTime(VetTimes *vt) {
+void cadastrarTime(VetTimes *v) {
 
     if (vt->qtd == vt->cap) {
         vt->cap += INCREMENTO_CAPACIDADE;
@@ -31,9 +31,8 @@ void cadastrarTime(VetTimes *vt) {
 
     printf("\n--- CADASTRAR TIME ---\n");
     printf("Nome do time: ");
-    scanf(" %[^\n]", novo.nome); // Lê a string com espaços
+    scanf(" %[^\n]", novo.nome); // le o nome do time c os espaços
 
-    // Inicializa zerado
     novo.pontos = 0;
     novo.vitorias = 0;
     novo.empates = 0;
