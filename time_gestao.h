@@ -5,5 +5,6 @@
 
 void inicializarVetTimes(VetTimes *v);
 void liberarVetTimes(VetTimes *v);
+void cadastrarTime(VetTimes *v);
 
 #endif
