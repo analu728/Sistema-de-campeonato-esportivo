@@ -6,6 +6,12 @@
 #include "utils.h"
 
 int main(void) {
-    printf("Sistema de Campeonato Esportivo\n");
-    return 0;
+
+    VetTimes vt;
+
+    inicializarVetTimes(&vt);
+    printf("Capacidade: %d, Quantidade: %d\n", vt.cap, vt.qtd);
+    liberarVetTimes(&vt);
+    
+return 0;
 }
