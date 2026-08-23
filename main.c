@@ -5,7 +5,7 @@
 #include "arquivo.h"
 #include "utils.h"
 
-int main(void) {
-    printf("Sistema de Campeonato Esportivo\n");
-    return 0;
+int main(){
+
+return 0;
 }
