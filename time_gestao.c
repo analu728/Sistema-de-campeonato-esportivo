@@ -2,24 +2,25 @@
 #include <stdlib.h>
 #include "time_gestao.h"
 
-void inicializarVetTimes(VetTimes *v){
-    v->itens = malloc(CAPACIDADE_INICIAL * sizeof(Time));
-    if (v->itens == NULL){
+void inicializarVetTimes(VetTimes *vt){
+    vt->itens = malloc(CAPACIDADE_INICIAL * sizeof(Time));
+    if (vt->itens == NULL){
         printf("Erro: falha ao alocar memoria para os times.\n");
         exit(1);
     }
 
-    v->cap = CAPACIDADE_INICIAL;
-    v->qtd = 0;
+    vt->cap = CAPACIDADE_INICIAL;
+    vt->qtd = 0;
 }
-void liberarVetTimes(VetTimes *v){
-    free(v->itens);
-    v->itens = NULL;
-    v->qtd = 0;
-    v->cap = 0;
+void liberarVetTimes(VetTimes *vt){
+    free(vt->itens);
+    vt->itens = NULL;
+    vt->qtd = 0;
+    vt->cap = 0;
 }
 
-void cadastrarTime(VetTimes *v) {
+void cadastrarTime(VetTimes *vt) {
+
 
     if (vt->qtd == vt->cap) {
         vt->cap += INCREMENTO_CAPACIDADE;
@@ -29,8 +30,8 @@ void cadastrarTime(VetTimes *v) {
     Time novo;
     novo.id = vt->qtd + 1; // id do time
 
-    printf("\n--- CADASTRAR TIME ---\n");
-    printf("Nome do time: ");
+    printf("\nCadastrar Time\n");
+    printf("Nome do time: \n");
     scanf(" %[^\n]", novo.nome); // le o nome do time c os espaços
 
     novo.pontos = 0;
@@ -44,4 +45,20 @@ void cadastrarTime(VetTimes *v) {
     vt->qtd++;
 
     printf("Time '%s' cadastrado com sucesso! (ID: %d)\n", novo.nome, novo.id);
+}
+void listarTimes(const VetTimes *vt){
+    if (vt->qtd == 0) {
+        printf("\nNenhum time cadastrado ainda.\n");
+        return;
+    }
+    printf("\nLista de times:\n");
+    for (int i = 0; i < vt->qtd; i++) {
+        printf("ID: %d | Nome: %-20s | Pontos: %d | V: %d | E: %d | D: %d\n",
+               vt->itens[i].id,
+               vt->itens[i].nome,
+               vt->itens[i].pontos,
+               vt->itens[i].vitorias,
+               vt->itens[i].empates,
+               vt->itens[i].derrotas);
+    }
 }
