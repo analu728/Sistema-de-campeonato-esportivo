@@ -3,8 +3,10 @@
 
 #include "tipos.h"
 
-void inicializarVetTimes(VetTimes *v);
-void liberarVetTimes(VetTimes *v);
-void cadastrarTime(VetTimes *v);
+void inicializarVetTimes(VetTimes *vt);
+void liberarVetTimes(VetTimes *vt);
+void cadastrarTime(VetTimes *vt);
+void listarTimes(const VetTimes *vt);
+void alterarTime(VetTimes *vt);
 
 #endif
