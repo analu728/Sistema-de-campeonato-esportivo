@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "time_gestao.h"
 
 void inicializarVetTimes(VetTimes *vt){
@@ -67,5 +68,39 @@ void listarTimes(const VetTimes *vt){
                vt->itens[i].vitorias,
                vt->itens[i].empates,
                vt->itens[i].derrotas);
+    }
+}
+void atualizarTime(VetTimes *vt, int id, const char *novoNome){
+    int i, encontrado=0;
+    for(i=0;i<vt->qtd;i++){
+        if(vt->itens[i].id==id){
+            strcpy(vt->itens[i].nome, novoNome);
+            encontrado=1;
+        }
+        if(encontrado==1){
+            break;
+        }
+    }
+    if (encontrado==0){
+        printf("ID do Time não encontrado.");
+    }
+    
+}
+void removerTime(VetTimes *vt, int id){
+    int i, encontrado=0, j;
+    for(i=0;i<vt->qtd;i++){
+        if(vt->itens[i].id==id){
+            for (j = i; j < vt->qtd - 1; j++) {
+                vt->itens[j] = vt->itens[j + 1];
+            }
+            vt->qtd--;
+            encontrado=1;
+        }
+        if(encontrado==1){
+            break;
+        }
+    }
+    if (encontrado==0){
+        printf("ID do Time não encontrado.");
     }
 }
