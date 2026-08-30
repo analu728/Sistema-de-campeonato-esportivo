@@ -22,6 +22,7 @@ typedef struct {
  int golsFora;
  Data data;
  int disputada; // 0=agendada, 1=concluída
+ char fase[30]; // "Grupos", "Oitavas", "Quartas", "Semifinal", "Final"
 } Partida;
 typedef struct {
  Time *itens;
