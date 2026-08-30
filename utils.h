@@ -3,6 +3,11 @@
 
 #include "tipos.h"
 
-// os protótipos das funções vêm aqui embaixo
+int BuscarTime(const VetTimes *vt, int id);
+int BuscarPartida(const VetPartidas *vp, int id);
+
+int validardata(Data d);
+int validarplacar(int gols);
+int validarnome(const char *nome);
 
 #endif
