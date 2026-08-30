@@ -23,8 +23,15 @@ void cadastrarTime(VetTimes *vt) {
 
 
     if (vt->qtd == vt->cap) {
-        vt->cap += INCREMENTO_CAPACIDADE;
-        vt->itens = realloc(vt->itens, vt->cap * sizeof(Time));
+        int nova_capacidade=vt->cap+INCREMENTO_CAPACIDADE;
+        Time *temp =realloc(vt->itens, nova_capacidade * sizeof(Time));
+
+        if (temp==NULL){
+            printf("Nao foi possivel realocar memoria\n");
+            exit(1);
+        }
+        vt->itens=temp;
+        vt->cap=nova_capacidade;
     }
 
     Time novo;
