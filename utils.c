@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <ctype.h>
 
-int compararSemCase(const char *a, const char *b) {
+int compararString(const char *a, const char *b) {
     while (*a != '\0' && *b != '\0') {
         char ca = tolower((unsigned char) *a);
         char cb = tolower((unsigned char) *b);
@@ -20,15 +20,6 @@ int BuscarTime(const VetTimes *vt, int id){
     for(int i=0;i<vt->qtd;i++){
         if(vt->itens[i].id==id){
             return i;//achou
-        }
-    }
-    return -1;
-}
-
-int BuscarTimePorNome(const VetTimes *vt, const char *nome){
-    for(int i=0;i<vt->qtd;i++){
-        if(strcasecmp(vt->itens[i].nome, nome)==0){
-            return 1;
         }
     }
     return -1;

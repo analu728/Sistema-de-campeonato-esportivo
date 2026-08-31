@@ -30,7 +30,7 @@ void cadastrarPartida(VetPartidas *vp, const VetTimes *vt) {
     Partida nova;
 
     printf("\n--- Cadastrar/Agendar Partida ---\n");
-    printf("(Digite 0 no nome do time da casa a qualquer momento para cancelar e voltar)\n");
+    printf("(Digite 0 no ID do time da casa a qualquer momento para cancelar e voltar)\n");
 
     int maiorId = 0;
     for (int i = 0; i < vp->qtd; i++) {
@@ -38,32 +38,25 @@ void cadastrarPartida(VetPartidas *vp, const VetTimes *vt) {
             maiorId = vp->itens[i].id;
         }
     }
-    nova.id = maiorId + 1; // ID gerado automaticamente
+    nova.id = maiorId + 1; // ID da partida gerado automaticamente
 
-    char nomeCasa[64], nomeFora[64];
-
-    printf("Nome do time da casa: ");
-    scanf(" %[^\n]", nomeCasa);
-    if (strcmp(nomeCasa, "0") == 0) {
+    printf("ID do Time da Casa: ");
+    scanf("%d", &nova.idCasa);
+    if (nova.idCasa == 0) {
         printf("Operacao cancelada.\n");
         return;
     }
-    int idxCasa = BuscarTimePorNome(vt, nomeCasa);
-    if (idxCasa == -1) {
-        printf("Erro: Time da casa '%s' nao foi encontrado.\n", nomeCasa);
+    if (BuscarTime(vt, nova.idCasa) == -1) {
+        printf("Erro: Time da casa (ID %d) nao foi encontrado.\n", nova.idCasa);
         return;
     }
-    nova.idCasa = vt->itens[idxCasa].id;
 
-    printf("Nome do time de fora: ");
-    scanf(" %[^\n]", nomeFora);
-    int idxFora = BuscarTimePorNome(vt, nomeFora);
-    if (idxFora == -1) {
-        printf("Erro: Time de fora '%s' nao foi encontrado.\n", nomeFora);
+    printf("ID do Time de Fora: ");
+    scanf("%d", &nova.idFora);
+    if (BuscarTime(vt, nova.idFora) == -1) {
+        printf("Erro: Time de fora (ID %d) nao foi encontrado.\n", nova.idFora);
         return;
     }
-    nova.idFora = vt->itens[idxFora].id;
-
 
     if (nova.idCasa == nova.idFora) {
         printf("Erro: Um time nao pode jogar contra ele mesmo.\n");
@@ -223,7 +216,7 @@ void exibirChaveamentoMataMata(const VetPartidas *vp, const VetTimes *vt) {
         int encontrouNaFase = 0;
 
         for (int i = 0; i < vp->qtd; i++) {
-                if (compararSemCase(vp->itens[i].fase, fases[f])) {                if (!encontrouNaFase) {
+                if (compararString(vp->itens[i].fase, fases[f])) {                if (!encontrouNaFase) {
                     printf("\n--- %s ---\n", fases[f]);
                     encontrouNaFase = 1;
                 }
