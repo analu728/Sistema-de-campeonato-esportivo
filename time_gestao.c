@@ -28,7 +28,7 @@ void cadastrarTime(VetTimes *vt) {
         Time *temp =realloc(vt->itens, nova_capacidade * sizeof(Time));
 
         if (temp==NULL){
-            printf("Não foi possivel realocar memória.\n");
+            printf("Nao foi possivel realocar memoria.\n");
             exit(1);
         }
         vt->itens=temp;
@@ -93,7 +93,7 @@ void atualizarTime(VetTimes *vt, int id, const char *novoNome){
         }
     }
     if (encontrado==0){
-        printf("ID do Time não encontrado.");
+        printf("ID do Time nao encontrado.");
     }
     
 }
@@ -112,7 +112,7 @@ void removerTime(VetTimes *vt, int id){
         }
     }
     if (encontrado==0){
-        printf("ID do Time não encontrado.");
+        printf("ID do Time nao encontrado.");
     }
 }
 void exibirClassificacao(const VetTimes *vt){
@@ -148,7 +148,7 @@ void exibirClassificacao(const VetTimes *vt){
         }
     }
 
-    printf("\n=================== TABELA DE CLASSIFICAÇÃO ===================\n");
+    printf("\n=================== TABELA DE CLASSIFICAÇAO ===================\n");
     printf("%-4s %-20s %-6s %-3s %-3s %-3s %-4s %-4s %-4s\n",
            "Pos", "Time", "Pts", "V", "E", "D", "GP", "GC", "SG");
     for (int i = 0; i < vt->qtd; i++) {

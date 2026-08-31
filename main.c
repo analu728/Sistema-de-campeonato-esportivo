@@ -20,7 +20,7 @@ void menuTimes(VetTimes *vt) {
         printf("Opcao: ");
         int lido = scanf(" %d", &opcao);
         if (lido != 1) {
-            printf("Entrada invalida! Digite apenas o número da opcao.\n");
+            printf("Entrada invalida! Digite apenas o numero da opcao.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);
             opcao = -1;
@@ -59,7 +59,7 @@ void menuTimes(VetTimes *vt) {
                 printf("Voltando ao menu principal...\n");
                 break;
             default:
-                printf("Opção inválida.\n");
+                printf("Opçao invalida.\n");
                 break;
         }
     } while (opcao != 0);
@@ -79,7 +79,7 @@ void menuPartidas(VetPartidas *vp, VetTimes *vt) {
         printf("Opcao: ");
         int lido = scanf(" %d", &opcao);
         if (lido != 1) {
-            printf("Entrada invalida! Digite apenas o número da opção.\n");
+            printf("Entrada invalida! Digite apenas o numero da opçao.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);
             opcao = -1;
@@ -116,7 +116,7 @@ void menuPartidas(VetPartidas *vp, VetTimes *vt) {
                 printf("Voltando ao menu principal...\n");
                 break;
             default:
-                printf("Opção inválida.\n");
+                printf("Opçao invalida.\n");
                 break;
         }
     } while (opcao != 0);
@@ -140,7 +140,7 @@ int main() {
         printf("Opcao: ");
         int lido = scanf(" %d", &opcao);
         if (lido != 1) {
-            printf("Entrada invalida! Digite apenas o número da opção.\n");
+            printf("Entrada invalida! Digite apenas o numero da opçao.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);
             opcao = -1;
@@ -156,7 +156,7 @@ int main() {
                 printf("Encerrando\n");
                 break;
             default:
-                printf("Opção inválida.\n");
+                printf("Opçao invalida.\n");
                 break;
         }
     } while (opcao != 0);

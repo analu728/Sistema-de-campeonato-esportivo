@@ -10,7 +10,7 @@ void inicializarVetPartidas(VetPartidas *vp) {
     vp->itens = (Partida *) malloc(vp->cap * sizeof(Partida));
 
     if (vp->itens == NULL) {
-        printf("Erro: Falha ao alocar memória para partidas\n");
+        printf("Erro: Falha ao alocar memoria para partidas\n");
     }
 }
 void cadastrarPartida(VetPartidas *vp, const VetTimes *vt) {
@@ -18,12 +18,12 @@ void cadastrarPartida(VetPartidas *vp, const VetTimes *vt) {
         vp->cap *= 2;
         vp->itens = (Partida *) realloc(vp->itens, vp->cap * sizeof(Partida));
         if (vp->itens == NULL) {
-            printf("Erro: Falha ao expandir a memória de partidas.\n");
+            printf("Erro: Falha ao expandir a memoria de partidas.\n");
             return;
         }
     }
     if (vp->qtd >= 100) {
-        printf("Erro: Limite máximo de partidas atingido.\n");
+        printf("Erro: Limite maximo de partidas atingido.\n");
         return;
     }
 
@@ -130,7 +130,7 @@ void registrarResultado(VetPartidas *vp, VetTimes *vt) {
     scanf("%d", &idPartida);
 
     if(idPartida==0){
-        printf("Operação cancrlada.\n");
+        printf("Operaçao cancelada.\n");
         return;
     }
 
@@ -142,7 +142,7 @@ void registrarResultado(VetPartidas *vp, VetTimes *vt) {
 
     Partida *p = &vp->itens[idxP];
     if (p->disputada == 1) {
-        printf("Erro: Esta partida já teve seu resultado registrado.\n");
+        printf("Erro: Esta partida ja teve seu resultado registrado.\n");
         return;
     }
 
@@ -162,7 +162,7 @@ void registrarResultado(VetPartidas *vp, VetTimes *vt) {
     scanf("%d", &golsFora);
 
    if (!validarplacar(golsCasa) || !validarplacar(golsFora)) {
-        printf("Erro: Placar não pode ser negativo.\n");
+        printf("Erro: Placar nao pode ser negativo.\n");
         return;
     }
 
