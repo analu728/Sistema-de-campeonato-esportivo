@@ -1,6 +1,7 @@
 #include "arquivo.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void salvarTimes(const VetTimes *vt) {
     FILE *f = fopen("data/times.txt", "w");
@@ -10,15 +11,15 @@ void salvarTimes(const VetTimes *vt) {
     }
 
     for (int i = 0; i < vt->qtd; i++) {
-        fprintf(f, "%d %s %d %d %d %d %d %d\n",
+        fprintf(f, "%d %d %d %d %d %d %d %s\n",
                 vt->itens[i].id,
-                vt->itens[i].nome,
                 vt->itens[i].pontos,
                 vt->itens[i].vitorias,
                 vt->itens[i].empates,
                 vt->itens[i].derrotas,
                 vt->itens[i].golsPro,
-                vt->itens[i].golsContra);
+                vt->itens[i].golsContra,
+                vt->itens[i].nome);
     }
 
     fclose(f);
@@ -30,15 +31,25 @@ void carregarTimes(VetTimes *vt) {
     }
 
     Time t;
-    while (fscanf(f, "%d %s %d %d %d %d %d %d",
-                   &t.id, t.nome, &t.pontos, &t.vitorias,
-                   &t.empates, &t.derrotas, &t.golsPro, &t.golsContra) == 8) {
+    while (fscanf(f, "%d %d %d %d %d %d %d",
+                   &t.id, &t.pontos, &t.vitorias,
+                   &t.empates, &t.derrotas, &t.golsPro, &t.golsContra) == 7) {
+
+        if (fscanf(f, " %63[^\n]", t.nome) != 1) {
+            break; // linha sem nome, arquivo corrompido ou incompleto
+        }
+        // remove '\r' que pode sobrar em arquivos salvos no Windows
+        int len = strlen(t.nome);
+        while (len > 0 && (t.nome[len-1] == '\r' || t.nome[len-1] == '\n')) {
+            t.nome[len-1] = '\0';
+            len--;
+        }
 
         if (vt->qtd == vt->cap) {
             int novaCapacidade = vt->cap + INCREMENTO_CAPACIDADE;
             Time *temp = realloc(vt->itens, novaCapacidade * sizeof(Time));
             if (temp == NULL) {
-                printf("Erro ao expandir memoria ao carregar times.\n");
+                printf("Erro ao expandir memória ao carregar times.\n");
                 fclose(f);
                 return;
             }

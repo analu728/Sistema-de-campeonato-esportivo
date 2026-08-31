@@ -10,7 +10,7 @@ void inicializarVetPartidas(VetPartidas *vp) {
     vp->itens = (Partida *) malloc(vp->cap * sizeof(Partida));
 
     if (vp->itens == NULL) {
-        printf("Erro: Falha ao alocar memoria para partidas\n");
+        printf("Erro: Falha ao alocar memória para partidas\n");
     }
 }
 void cadastrarPartida(VetPartidas *vp, const VetTimes *vt) {
@@ -18,39 +18,52 @@ void cadastrarPartida(VetPartidas *vp, const VetTimes *vt) {
         vp->cap *= 2;
         vp->itens = (Partida *) realloc(vp->itens, vp->cap * sizeof(Partida));
         if (vp->itens == NULL) {
-            printf("Erro: Falha ao expandir a memoria de partidas.\n");
+            printf("Erro: Falha ao expandir a memória de partidas.\n");
             return;
         }
     }
     if (vp->qtd >= 100) {
-        printf("Erro: Limite maximo de partidas atingido.\n");
+        printf("Erro: Limite máximo de partidas atingido.\n");
         return;
     }
 
     Partida nova;
 
     printf("\n--- Cadastrar/Agendar Partida ---\n");
-    printf("ID da Partida: ");
-    scanf("%d", &nova.id);
+    printf("(Digite 0 no nome do time da casa a qualquer momento para cancelar e voltar)\n");
 
-    if (BuscarPartida(vp, nova.id) != -1) {
-        printf("Erro: Ja existe uma partida cadastrada com o ID %d.\n", nova.id);
+    int maiorId = 0;
+    for (int i = 0; i < vp->qtd; i++) {
+        if (vp->itens[i].id > maiorId) {
+            maiorId = vp->itens[i].id;
+        }
+    }
+    nova.id = maiorId + 1; // ID gerado automaticamente
+
+    char nomeCasa[64], nomeFora[64];
+
+    printf("Nome do time da casa: ");
+    scanf(" %[^\n]", nomeCasa);
+    if (strcmp(nomeCasa, "0") == 0) {
+        printf("Operacao cancelada.\n");
         return;
     }
-
-    printf("ID do Time da Casa: ");
-    scanf("%d", &nova.idCasa);
-    if (BuscarTime(vt, nova.idCasa) == -1) {
-        printf("Erro: Time da casa (ID %d) nao foi encontrado.\n", nova.idCasa);
+    int idxCasa = BuscarTimePorNome(vt, nomeCasa);
+    if (idxCasa == -1) {
+        printf("Erro: Time da casa '%s' nao foi encontrado.\n", nomeCasa);
         return;
     }
+    nova.idCasa = vt->itens[idxCasa].id;
 
-    printf("ID do Time de Fora: ");
-    scanf("%d", &nova.idFora);
-    if (BuscarTime(vt, nova.idFora) == -1) {
-        printf("Erro: Time de fora (ID %d) nao foi encontrado.\n", nova.idFora);
+    printf("Nome do time de fora: ");
+    scanf(" %[^\n]", nomeFora);
+    int idxFora = BuscarTimePorNome(vt, nomeFora);
+    if (idxFora == -1) {
+        printf("Erro: Time de fora '%s' nao foi encontrado.\n", nomeFora);
         return;
     }
+    nova.idFora = vt->itens[idxFora].id;
+
 
     if (nova.idCasa == nova.idFora) {
         printf("Erro: Um time nao pode jogar contra ele mesmo.\n");
@@ -120,8 +133,13 @@ void registrarResultado(VetPartidas *vp, VetTimes *vt) {
     int idPartida, golsCasa, golsFora;
 
     printf("\nRegistrar resultado\n");
-    printf("Digite o ID da partida: ");
+    printf("Digite o ID da partida (0 para cancelar): ");
     scanf("%d", &idPartida);
+
+    if(idPartida==0){
+        printf("Operação cancrlada.\n");
+        return;
+    }
 
     int idxP = BuscarPartida(vp, idPartida);
     if (idxP == -1) {
@@ -131,17 +149,27 @@ void registrarResultado(VetPartidas *vp, VetTimes *vt) {
 
     Partida *p = &vp->itens[idxP];
     if (p->disputada == 1) {
-        printf("Erro: Esta partida ja teve seu resultado registrado.\n");
+        printf("Erro: Esta partida já teve seu resultado registrado.\n");
         return;
     }
 
-    printf("Gols do Time da Casa: ");
+    int idxCasaConfirma = BuscarTime(vt, p->idCasa);
+    int idxForaConfirma = BuscarTime(vt, p->idFora);
+    char nomeCasaConfirma[64] = "Desconhecido";
+    char nomeForaConfirma[64] = "Desconhecido";
+    if (idxCasaConfirma != -1) strcpy(nomeCasaConfirma, vt->itens[idxCasaConfirma].nome);
+    if (idxForaConfirma != -1) strcpy(nomeForaConfirma, vt->itens[idxForaConfirma].nome);
+
+    printf("\n--- Confirme a partida ---\n");
+    printf("Partida %d: %s (casa) x %s (fora)\n", p->id, nomeCasaConfirma, nomeForaConfirma);
+
+    printf("Gols do Time da Casa (%s): ", nomeCasaConfirma);
     scanf("%d", &golsCasa);
-    printf("Gols do Time de Fora: ");
+    printf("Gols do Time de Fora (%s): ", nomeForaConfirma);
     scanf("%d", &golsFora);
 
-    if (!validarplacar(golsCasa) || !validarplacar(golsFora)) {
-        printf("Erro: Placar nao pode ser negativo.\n");
+   if (!validarplacar(golsCasa) || !validarplacar(golsFora)) {
+        printf("Erro: Placar não pode ser negativo.\n");
         return;
     }
 
@@ -187,7 +215,7 @@ void exibirChaveamentoMataMata(const VetPartidas *vp, const VetTimes *vt) {
         printf("\nNenhuma partida cadastrada.\n");
         return;
     }
-    printf("\nChaveamento do mata mata:");
+    printf("\n========================== CHAVEAMENTO MATA-MATA ==========================\n");
 
     char fases[5][20] = {"Grupos", "Oitavas", "Quartas", "Semifinal", "Final"};
 
@@ -195,8 +223,7 @@ void exibirChaveamentoMataMata(const VetPartidas *vp, const VetTimes *vt) {
         int encontrouNaFase = 0;
 
         for (int i = 0; i < vp->qtd; i++) {
-            if (strcasecmp(vp->itens[i].fase, fases[f]) == 0) {
-                if (!encontrouNaFase) {
+                if (compararSemCase(vp->itens[i].fase, fases[f])) {                if (!encontrouNaFase) {
                     printf("\n--- %s ---\n", fases[f]);
                     encontrouNaFase = 1;
                 }

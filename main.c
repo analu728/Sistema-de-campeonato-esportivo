@@ -9,11 +9,18 @@ void menuTimes(VetTimes *vt) {
     int opcao, id;
     char novoNome[64];
     do {
-        printf("\n--- Menu Times ---\n");
-        printf("Cadastrar time: 1\nListar times: 2\nAlterar dados de um time: 3\nRemover time: 4\nVer classificação\nVoltar: 0\n");
+        printf("\n================ MENU TIMES ================\n");
+        printf("| 1 - Cadastrar time                        |\n");
+        printf("| 2 - Listar times                          |\n");
+        printf("| 3 - Alterar dados de um time              |\n");
+        printf("| 4 - Remover time                          |\n");
+        printf("| 5 - Ver classificacao                     |\n");
+        printf("| 0 - Voltar                                |\n");
+        printf("==============================================\n");
+        printf("Opcao: ");
         int lido = scanf(" %d", &opcao);
         if (lido != 1) {
-            printf("Entrada invalida! Digite apenas o numero da opcao.\n");
+            printf("Entrada invalida! Digite apenas o número da opcao.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);
             opcao = -1;
@@ -26,15 +33,23 @@ void menuTimes(VetTimes *vt) {
                 listarTimes(vt);
                 break;
             case 3:
-                printf("Digite o ID do time que deseja alterar: ");
+                printf("Digite o ID do time que deseja alterar (0 para cancelar): ");
                 scanf("%d", &id);
+                if (id == 0) {
+                    printf("Operacao cancelada.\n");
+                    break;
+                }
                 printf("Digite o novo nome: ");
                 scanf(" %[^\n]", novoNome);
                 atualizarTime(vt, id, novoNome);
                 break;
             case 4:
-                printf("Digite o ID do time que deseja remover: ");
+                printf("Digite o ID do time que deseja remover (0 para cancelar): ");
                 scanf("%d", &id);
+                if (id == 0) {
+                    printf("Operacao cancelada.\n");
+                    break;
+                }
                 removerTime(vt, id);
                 break;
             case 5:
@@ -44,7 +59,7 @@ void menuTimes(VetTimes *vt) {
                 printf("Voltando ao menu principal...\n");
                 break;
             default:
-                printf("Opcao invalida.\n");
+                printf("Opção inválida.\n");
                 break;
         }
     } while (opcao != 0);
@@ -53,11 +68,18 @@ void menuTimes(VetTimes *vt) {
 void menuPartidas(VetPartidas *vp, VetTimes *vt) {
     int opcao, id;
     do {
-        printf("\n--- Menu Partidas ---\n");
-        printf("Cadastrar partida: 1\nAtualizar partida: 2\nRemover partida: 3\nRegistrar resultado: 4\nVer chaveamento: 5\nVoltar: 0\n");
+        printf("\n=============== MENU PARTIDAS ===============\n");
+        printf("| 1 - Cadastrar partida                     |\n");
+        printf("| 2 - Atualizar partida                     |\n");
+        printf("| 3 - Remover partida                       |\n");
+        printf("| 4 - Registrar resultado                   |\n");
+        printf("| 5 - Ver chaveamento                       |\n");
+        printf("| 0 - Voltar                                |\n");
+        printf("==============================================\n");
+        printf("Opcao: ");
         int lido = scanf(" %d", &opcao);
         if (lido != 1) {
-            printf("Entrada invalida! Digite apenas o numero da opcao.\n");
+            printf("Entrada invalida! Digite apenas o número da opção.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);
             opcao = -1;
@@ -67,13 +89,21 @@ void menuPartidas(VetPartidas *vp, VetTimes *vt) {
                 cadastrarPartida(vp, vt);
                 break;
             case 2:
-                printf("Digite o ID da partida que deseja atualizar: ");
+                printf("Digite o ID da partida que deseja atualizar (0 para cancelar): ");
                 scanf("%d", &id);
+                if (id == 0) {
+                    printf("Operacao cancelada.\n");
+                    break;
+                }
                 atualizarPartida(vp, id);
                 break;
             case 3:
-                printf("Digite o ID da partida que deseja remover: ");
+                printf("Digite o ID da partida que deseja remover (0 para cancelar): ");
                 scanf("%d", &id);
+                if (id == 0) {
+                    printf("Operacao cancelada.\n");
+                    break;
+                }
                 removerPartida(vp, id);
                 break;
             case 4:
@@ -86,7 +116,7 @@ void menuPartidas(VetPartidas *vp, VetTimes *vt) {
                 printf("Voltando ao menu principal...\n");
                 break;
             default:
-                printf("Opcao invalida.\n");
+                printf("Opção inválida.\n");
                 break;
         }
     } while (opcao != 0);
@@ -102,11 +132,15 @@ int main() {
     carregarPartidas(&vp);
 
     do {
-        printf("\nSistema de Campeonato Esportivo\n");
-        printf("Gerenciar Times: 1\nGerenciar Partidas: 2\nSair: 0\n");
+        printf("\n============ SISTEMA DE CAMPEONATO ESPORTIVO ============\n");
+        printf("| 1 - Gerenciar Times                                    |\n");
+        printf("| 2 - Gerenciar Partidas                                 |\n");
+        printf("| 0 - Sair                                               |\n");
+        printf("===========================================================\n");
+        printf("Opcao: ");
         int lido = scanf(" %d", &opcao);
         if (lido != 1) {
-            printf("Entrada invalida! Digite apenas o numero da opcao.\n");
+            printf("Entrada invalida! Digite apenas o número da opção.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);
             opcao = -1;
@@ -122,7 +156,7 @@ int main() {
                 printf("Encerrando\n");
                 break;
             default:
-                printf("Opcao invalida.\n");
+                printf("Opção inválida.\n");
                 break;
         }
     } while (opcao != 0);

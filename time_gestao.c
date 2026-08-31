@@ -28,7 +28,7 @@ void cadastrarTime(VetTimes *vt) {
         Time *temp =realloc(vt->itens, nova_capacidade * sizeof(Time));
 
         if (temp==NULL){
-            printf("Nao foi possivel realocar memoria\n");
+            printf("Não foi possivel realocar memória.\n");
             exit(1);
         }
         vt->itens=temp;
@@ -36,7 +36,13 @@ void cadastrarTime(VetTimes *vt) {
     }
 
     Time novo;
-    novo.id = vt->qtd + 1; // id do time
+    int maiorId=0;
+    for(int i=0;i<vt->qtd;i++){
+        if(vt->itens[i].id>maiorId){
+            maiorId=vt->itens[i].id;
+        }
+    }
+    novo.id= maiorId+1;
 
     printf("\nCadastrar Time\n");
     printf("Nome do time: \n");
@@ -59,16 +65,21 @@ void listarTimes(const VetTimes *vt){
         printf("\nNenhum time cadastrado ainda.\n");
         return;
     }
-    printf("\nLista de times:\n");
+    printf("\n=========================== LISTA DE TIMES ===========================\n");
+    printf("%-4s %-20s %-6s %-3s %-3s %-3s %-4s %-4s\n",
+           "ID", "Nome", "Pts", "V", "E", "D", "GP", "GC");
     for (int i = 0; i < vt->qtd; i++) {
-        printf("ID: %d | Nome: %-20s | Pontos: %d | V: %d | E: %d | D: %d\n",
+        printf("%-4d %-20s %-6d %-3d %-3d %-3d %-4d %-4d\n",
                vt->itens[i].id,
                vt->itens[i].nome,
                vt->itens[i].pontos,
                vt->itens[i].vitorias,
                vt->itens[i].empates,
-               vt->itens[i].derrotas);
+               vt->itens[i].derrotas,
+               vt->itens[i].golsPro,
+               vt->itens[i].golsContra);
     }
+    printf("========================================================================\n");
 }
 void atualizarTime(VetTimes *vt, int id, const char *novoNome){
     int i, encontrado=0;
@@ -104,8 +115,8 @@ void removerTime(VetTimes *vt, int id){
         printf("ID do Time não encontrado.");
     }
 }
-void exibirClassificacao(const VetTimes *vt) {
-    if (vt->qtd == 0) {
+void exibirClassificacao(const VetTimes *vt){
+    if (vt->qtd == 0){
         printf("\nNenhum time cadastrado ainda.\n");
         return;
     }
@@ -137,7 +148,7 @@ void exibirClassificacao(const VetTimes *vt) {
         }
     }
 
-    printf("\n=================== TABELA DE CLASSIFICACAO ===================\n");
+    printf("\n=================== TABELA DE CLASSIFICAÇÃO ===================\n");
     printf("%-4s %-20s %-6s %-3s %-3s %-3s %-4s %-4s %-4s\n",
            "Pos", "Time", "Pts", "V", "E", "D", "GP", "GC", "SG");
     for (int i = 0; i < vt->qtd; i++) {
