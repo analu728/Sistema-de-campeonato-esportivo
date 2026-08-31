@@ -27,7 +27,7 @@ void salvarTimes(const VetTimes *vt) {
 void carregarTimes(VetTimes *vt) {
     FILE *f = fopen("data/times.txt", "r");
     if (f == NULL) {
-        return; // arquivo ainda não existe (primeira vez rodando) — não é erro, só não tem nada pra carregar ainda
+        return; 
     }
 
     Time t;
@@ -36,9 +36,9 @@ void carregarTimes(VetTimes *vt) {
                    &t.empates, &t.derrotas, &t.golsPro, &t.golsContra) == 7) {
 
         if (fscanf(f, " %63[^\n]", t.nome) != 1) {
-            break; // linha sem nome, arquivo corrompido ou incompleto
+            break; 
         }
-        // remove '\r' que pode sobrar em arquivos salvos no Windows
+        
         int len = strlen(t.nome);
         while (len > 0 && (t.nome[len-1] == '\r' || t.nome[len-1] == '\n')) {
             t.nome[len-1] = '\0';
