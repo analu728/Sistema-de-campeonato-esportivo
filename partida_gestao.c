@@ -38,8 +38,7 @@ void cadastrarPartida(VetPartidas *vp, const VetTimes *vt) {
             maiorId = vp->itens[i].id;
         }
     }
-    nova.id = maiorId + 1; // ID da partida gerado automaticamente
-
+    nova.id = maiorId + 1; 
     printf("ID do Time da Casa: ");
     scanf("%d", &nova.idCasa);
     if (nova.idCasa == 0) {
