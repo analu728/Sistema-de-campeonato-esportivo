@@ -46,8 +46,7 @@ void cadastrarTime(VetTimes *vt) {
 
     printf("\nCadastrar Time\n");
     printf("Nome do time: \n");
-    scanf(" %[^\n]", novo.nome); // le o nome do time c os espaços
-
+    scanf(" %[^\n]", novo.nome); 
     novo.pontos = 0;
     novo.vitorias = 0;
     novo.empates = 0;
