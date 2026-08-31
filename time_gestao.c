@@ -104,3 +104,50 @@ void removerTime(VetTimes *vt, int id){
         printf("ID do Time não encontrado.");
     }
 }
+void exibirClassificacao(const VetTimes *vt) {
+    if (vt->qtd == 0) {
+        printf("\nNenhum time cadastrado ainda.\n");
+        return;
+    }
+
+    Time *copia = malloc(vt->qtd * sizeof(Time));
+    if (copia == NULL) {
+        printf("Erro ao alocar memoria para classificacao.\n");
+        return;
+    }
+    for (int i = 0; i < vt->qtd; i++) {
+        copia[i] = vt->itens[i];
+    }
+
+    for (int i = 0; i < vt->qtd - 1; i++) {
+        for (int j = 0; j < vt->qtd - 1 - i; j++) {
+            int saldoJ = copia[j].golsPro - copia[j].golsContra;
+            int saldoJ1 = copia[j+1].golsPro - copia[j+1].golsContra;
+            int trocar = 0;
+            if (copia[j].pontos < copia[j+1].pontos) trocar = 1;
+            else if (copia[j].pontos == copia[j+1].pontos) {
+                if (saldoJ < saldoJ1) trocar = 1;
+                else if (saldoJ == saldoJ1 && copia[j].golsPro < copia[j+1].golsPro) trocar = 1;
+            }
+            if (trocar) {
+                Time aux = copia[j];
+                copia[j] = copia[j+1];
+                copia[j+1] = aux;
+            }
+        }
+    }
+
+    printf("\n=================== TABELA DE CLASSIFICACAO ===================\n");
+    printf("%-4s %-20s %-6s %-3s %-3s %-3s %-4s %-4s %-4s\n",
+           "Pos", "Time", "Pts", "V", "E", "D", "GP", "GC", "SG");
+    for (int i = 0; i < vt->qtd; i++) {
+        int saldo = copia[i].golsPro - copia[i].golsContra;
+        printf("%-4d %-20s %-6d %-3d %-3d %-3d %-4d %-4d %-4d\n",
+               i + 1, copia[i].nome, copia[i].pontos, copia[i].vitorias,
+               copia[i].empates, copia[i].derrotas, copia[i].golsPro,
+               copia[i].golsContra, saldo);
+    }
+    printf("=================================================================\n");
+
+    free(copia);
+}

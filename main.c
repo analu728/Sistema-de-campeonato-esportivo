@@ -10,7 +10,7 @@ void menuTimes(VetTimes *vt) {
     char novoNome[64];
     do {
         printf("\n--- Menu Times ---\n");
-        printf("Cadastrar time: 1\nListar times: 2\nAlterar dados de um time: 3\nRemover time: 4\nVoltar: 0\n");
+        printf("Cadastrar time: 1\nListar times: 2\nAlterar dados de um time: 3\nRemover time: 4\nVer classificação\nVoltar: 0\n");
         int lido = scanf(" %d", &opcao);
         if (lido != 1) {
             printf("Entrada invalida! Digite apenas o numero da opcao.\n");
@@ -36,6 +36,9 @@ void menuTimes(VetTimes *vt) {
                 printf("Digite o ID do time que deseja remover: ");
                 scanf("%d", &id);
                 removerTime(vt, id);
+                break;
+            case 5:
+                exibirClassificacao(vt);
                 break;
             case 0:
                 printf("Voltando ao menu principal...\n");
@@ -96,6 +99,7 @@ int main() {
     inicializarVetTimes(&vt);
     carregarTimes(&vt);
     inicializarVetPartidas(&vp);
+    carregarPartidas(&vp);
 
     do {
         printf("\nSistema de Campeonato Esportivo\n");
@@ -124,6 +128,7 @@ int main() {
     } while (opcao != 0);
 
     salvarTimes(&vt);
+    salvarPartidas(&vp);
     liberarVetTimes(&vt);
     liberarVetPartidas(&vp);
     

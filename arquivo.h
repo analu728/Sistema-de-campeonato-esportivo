@@ -5,5 +5,7 @@
 
 void salvarTimes(const VetTimes *vt);
 void carregarTimes(VetTimes *vt);
+void salvarPartidas(const VetPartidas *vp);
+void carregarPartidas(VetPartidas *vp);
 
 #endif

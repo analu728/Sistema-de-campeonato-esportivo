@@ -52,3 +52,50 @@ void carregarTimes(VetTimes *vt) {
 
     fclose(f);
 }
+void salvarPartidas(const VetPartidas *vp) {
+    FILE *f = fopen("data/partidas.txt", "w");
+    if (f == NULL) {
+        printf("Erro ao abrir arquivo para salvar partidas.\n");
+        return;
+    }
+    for (int i = 0; i < vp->qtd; i++) {
+        fprintf(f, "%d %d %d %d %d %d %d %d %d %s\n",
+                vp->itens[i].id,
+                vp->itens[i].idCasa,
+                vp->itens[i].idFora,
+                vp->itens[i].golsCasa,
+                vp->itens[i].golsFora,
+                vp->itens[i].data.dia,
+                vp->itens[i].data.mes,
+                vp->itens[i].data.ano,
+                vp->itens[i].disputada,
+                vp->itens[i].fase);
+    }
+    fclose(f);
+}
+
+void carregarPartidas(VetPartidas *vp) {
+    FILE *f = fopen("data/partidas.txt", "r");
+    if (f == NULL) {
+        return;
+    }
+    Partida p;
+    while (fscanf(f, "%d %d %d %d %d %d %d %d %d %s",
+                  &p.id, &p.idCasa, &p.idFora, &p.golsCasa, &p.golsFora,
+                  &p.data.dia, &p.data.mes, &p.data.ano, &p.disputada, p.fase) == 10) {
+        if (vp->qtd == vp->cap) {
+            int novaCapacidade = vp->cap + INCREMENTO_CAPACIDADE;
+            Partida *temp = realloc(vp->itens, novaCapacidade * sizeof(Partida));
+            if (temp == NULL) {
+                printf("Erro ao expandir memoria ao carregar partidas.\n");
+                fclose(f);
+                return;
+            }
+            vp->itens = temp;
+            vp->cap = novaCapacidade;
+        }
+        vp->itens[vp->qtd] = p;
+        vp->qtd++;
+    }
+    fclose(f);
+}

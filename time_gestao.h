@@ -9,5 +9,6 @@ void cadastrarTime(VetTimes *vt);
 void listarTimes(const VetTimes *vt);
 void atualizarTime(VetTimes *vt, int id, const char *novoNome);
 void removerTime(VetTimes *vt, int id);
+void exibirClassificacao(const VetTimes *vt);
 
 #endif
