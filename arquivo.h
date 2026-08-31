@@ -3,6 +3,7 @@
 
 #include "tipos.h"
 
-// os protótipos das funções vêm aqui embaixo
+void salvarTimes(const VetTimes *vt);
+void carregarTimes(VetTimes *vt);
 
 #endif

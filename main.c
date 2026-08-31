@@ -89,11 +89,12 @@ void menuPartidas(VetPartidas *vp, VetTimes *vt) {
     } while (opcao != 0);
 }
 
-int main(void) {
+int main() {
     int opcao;
     VetTimes vt;
     VetPartidas vp;
     inicializarVetTimes(&vt);
+    carregarTimes(&vt);
     inicializarVetPartidas(&vp);
 
     do {
@@ -122,7 +123,9 @@ int main(void) {
         }
     } while (opcao != 0);
 
+    salvarTimes(&vt);
     liberarVetTimes(&vt);
     liberarVetPartidas(&vp);
-    return 0;
+    
+return 0;
 }
